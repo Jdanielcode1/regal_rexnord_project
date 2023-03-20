@@ -1,6 +1,6 @@
 import { Grid, makeStyles , Container, Paper, Avatar, Typography, TextField, Button} from "@material-ui/core"
-import { useState } from "react"
-import Background from '../assets/background.jpg'
+import { useEffect, useState } from "react"
+import Background from '../assets/regal-rexnord.webp'
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
@@ -9,6 +9,10 @@ const Login = () => {
     const [body, setBody] = useState({account: '', password:''})
     const navigate = useNavigate()
   
+    useEffect(() => {
+      document.title = 'Login'
+    }, []);
+
     const handleChange = e =>{
       setBody({
         ...body,
@@ -30,7 +34,7 @@ const Login = () => {
             if (response && response.data) {
                 console.log(response.data)
             } else {
-                console.log('Unknown error occurred')
+                alert('Unknown error occurred')
             }
         })
     }

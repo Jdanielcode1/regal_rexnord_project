@@ -6,8 +6,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({ limit: '10mb' }))
-// const JWT = require('jsonwebtoken')
-// const secretWord = 'Samus#Aran'
+
 
 const credentials = {
 	host: '127.0.0.1',
@@ -17,9 +16,7 @@ const credentials = {
 	database: 'usuarios'
 }
 
-app.get('/', (req, res) => {
-	res.send('hola desde tu primera ruta de la Api')
-})
+
 
 app.post('/api/login', (req, res) => {
 	const { account, password } = req.body
@@ -44,4 +41,4 @@ app.post('/api/login', (req, res) => {
 })
 
 
-app.listen(5173, () => console.log('hola soy el servidor'))
+app.listen(5173, () => console.log('Servidor activo'))
