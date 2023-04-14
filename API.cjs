@@ -7,7 +7,6 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({ limit: '10mb' }))
 
-
 const credentials = {
 	host: '127.0.0.1',
 	user: 'root',
@@ -15,8 +14,6 @@ const credentials = {
 	port: '3307',
 	database: 'usuarios'
 }
-
-
 
 app.post('/api/login', (req, res) => {
 	const { account, password } = req.body
@@ -39,6 +36,5 @@ app.post('/api/login', (req, res) => {
 	})
 	connection.end()
 })
-
 
 app.listen(5173, () => console.log('Servidor activo'))
