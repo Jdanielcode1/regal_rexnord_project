@@ -6,39 +6,40 @@ import { useNavigate } from "react-router-dom"
 
 const Login = () => {
     const classes = useStyles()
-    const [body, setBody] = useState({account: '', password:''})
+    const [firstName, setFirstName] = useState('')
+    const [password, setPassword] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [listPersona, setListPersona] = useState([])
     const navigate = useNavigate()
-  
+
+    const getPersona = async() =>{
+      const {data} = await axios.get("https://info-api.herokuapp.com/manager_user/")
+      setListPersona(data)
+      console.log(data)
+    }
+
     useEffect(() => {
-      document.title = 'Login'
+      document.title = 'Login',
+      getPersona(),
+      localStorage.removeItem("token")
     }, []);
 
-    const handleChange = e =>{
-      setBody({
-        ...body,
-        [e.target.name]: e.target.value
-      })
+    const onSubmit= (e) =>{
+      e.preventDefault()
+
+      const nombreEncontrado = listPersona.find( (usuario)=> usuario.firstname === firstName);
+      const apellidoEncontrado = listPersona.find( (usuario)=> usuario.lastname === lastName);
+      const contraseñaEncontrada = listPersona.find( (usuario)=> usuario.password_hash === password);
+
+      if (nombreEncontrado && apellidoEncontrado && contraseñaEncontrada) {
+        console.log("si se pudo")
+        localStorage.setItem("token", true)
+        navigate("/administrator")
+        return;
+      }
     }
-  
-    const onSubmit= () =>{
-      axios.post('http://localhost:5173/api/login', body)
-        .then(({ data }) => {
-            try{
-                localStorage.setItem('auth', '"yes"')
-                navigate("/home")
-            } catch(error){
-                console.log(error.message)
-            }
-        })
-        .catch(({ response }) => {
-            if (response && response.data) {
-                console.log(response.data)
-            } else {
-                alert('Unknown error occurred')
-            }
-        })
-    }
-  
+
+    
     return (
       <div>
         <Grid container component="main" className={classes.root}>
@@ -50,13 +51,24 @@ const Login = () => {
                 <TextField
                   fullWidth
                   autoFocus
-                  type='email'
+                  type='text'
                   margin="normal"
                   variant="filled"
-                  label='Account'
-                  name='account'
-                  value={body.account}
-                  onChange={handleChange}
+                  label='First name'
+                  name='firstname'
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                />
+                <TextField
+                  fullWidth
+                  autoFocus
+                  type='text'
+                  margin="normal"
+                  variant="filled"
+                  label='Last name'
+                  name='lastname'
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
                 />
                 <TextField
                   fullWidth
@@ -64,9 +76,9 @@ const Login = () => {
                   margin="normal"
                   variant="filled"
                   label='Password'
-                  name='password'
-                  value={body.password}
-                  onChange={handleChange}
+                  name='password_hash'
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                 />
                 <Button fullWidth variant="text" onClick={onSubmit}>
                   Enter
@@ -90,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
       
     },
     container:{
-      height:'60%',
+      height:'70%',
       opacity:'0.8',
       marginTop:theme.spacing(10),
       [theme.breakpoints.down(400 + theme.spacing(2)+2)]:{

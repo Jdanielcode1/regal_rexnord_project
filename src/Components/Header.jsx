@@ -1,57 +1,39 @@
-import { AppBar, Avatar, IconButton, makeStyles, Toolbar } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { AppBar, IconButton, makeStyles, Toolbar } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/RRX-cae5b038.png';
+import logo from '../assets/regalrexnord-logo.webp';
 
 const Header = () => {
     const classes = useStyles();
-    const history = useNavigate();
-    const [show, setShow]= useState(false);
-
-    const hideHeader = () =>{
-        if (window.scrollY > 100){
-            setShow(true);
-        } else{
-            setShow(false);
-        }
-    }
-
-    useEffect(()=> {
-        window.addEventListener("scroll", hideHeader);
-        return ()=>window.removeEventListener("scroll",hideHeader);
-    }, []);
+    const navigate = useNavigate();
 
     return (
-        <AppBar position='sticky' elevation={0} className={`${classes.root} ${show && classes.transparent}`}>
+        <AppBar position='sticky' elevation={0} className={classes.root}>
             <Toolbar className={classes.toolbar}>
-                <IconButton onClick={()=> history("/home")}>
+                <IconButton onClick={()=> navigate("/")}>
                     <img src={logo} alt='Logo' className={classes.image}/>
                 </IconButton>
-                
-                <Avatar variant='square' style={{cursor: "pointer"}} onClick={()=> history("/profile")}/>
             </Toolbar>
         </AppBar>
     )
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root:{
-        backgroundColor: "#111",
+        backgroundColor: "#cdcdcd",
         top: 0,
         left: 0,
         right: 0,
-    },
-    transparent:{
-        backgroundColor: "transparent",
+        boxShadow: theme.shadows[3],
+        padding: 0,
     },
     toolbar:{
         display: "flex",
         justifyContent: "space-between",
     },
     image: {
-        width: "50px",
+        width: "200px",
         cursor: "pointer",
     },
-  });
+  }));
 
 export default Header
