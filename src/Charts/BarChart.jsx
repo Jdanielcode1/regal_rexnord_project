@@ -9,7 +9,6 @@ const BarChart = () => {
   const getPersona = async() =>{
     const {data} = await axios.get("https://info-api.herokuapp.com/partida_falling_objects/")
     setListPersona(data)
-    console.log(data)
   }
 
   useEffect(() => {
@@ -20,15 +19,15 @@ const BarChart = () => {
   data.unshift(["Player", "Score", "Time"])
 
   const options = {
-    title: "Score for the game 'Falling Objects'",
+    title: "Score del juego 'Esquivar Objetos'",
     chartArea: { width: "50%" },
     isStacked: true,
     hAxis: {
-      title: "Total Score",
+      title: "Score",
       minValue: 0,
     },
     vAxis: {
-      title: "Player",
+      title: "Partida",
     },
   };
 

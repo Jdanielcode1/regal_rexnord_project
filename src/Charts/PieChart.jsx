@@ -12,7 +12,6 @@ const PieChart = () => {
   const getPersona = async() =>{
     const {data} = await axios.get("https://info-api.herokuapp.com/partida_falling_objects/")
     setListPersona(data)
-    console.log(data)
   }
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const PieChart = () => {
   data.unshift(["Player", "Score"])
 
 const options = {
-  title: "My Daily Activities",
+  title: "Puntuaciones de usuarios por partida",
 };
   return (
     <Chart

@@ -11,10 +11,10 @@ export const Home = () => {
   }, []);
 
   const { unityProvider } = useUnityContext({
-    loaderUrl: "/public/Assets/Pong2D.loader.js",
-    dataUrl: "/public/Assets/Pong2D.data",
-    frameworkUrl: "/public/Assets/Pong2D.framework.js",
-    codeUrl: "/public/Assets/Pong2D.wasm",
+    loaderUrl: "/public/Build (1)/Build/Builds.loader.js",
+    dataUrl: "/public/Build (1)/Build/Builds.data.br",
+    frameworkUrl: "/public/Build (1)/Build/Builds.framework.js.br",
+    codeUrl: "/public/Build (1)/Build/Builds.wasm.br",
   });
 
   return (
@@ -32,7 +32,7 @@ export const Home = () => {
 const useStyles = makeStyles((theme) => ({
   root:{
     backgroundColor: "#dcdcdc",
-    height:"110vh"
+    height:"190vh"
   },
   container:{
     display:"flex",
@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection:"column",
     alignItems:"center",
     alignContent:"center",
-    marginTop:theme.spacing(10),
-    height:"60vh",
-    width:"80vw",
+    marginTop:theme.spacing(5),
+    height:"100vh",
+    width:"95vw",
   },
 }))
